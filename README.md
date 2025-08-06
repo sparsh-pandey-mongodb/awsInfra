@@ -24,7 +24,8 @@ All Terraform resource blocks use the format `<user_prefix>.<resource_type>` for
 ---  
   
 ## Repository Structure  
-  
+
+ ```
 terraform  
 ├── ec2_instance  
 │   ├── main.tf  
@@ -37,7 +38,7 @@ terraform
 │   ├── terraform.tfvars  
 │   └── variables.tf  
 └── README.md  
-  
+```  
 ---  
   
 ## Prerequisites  
