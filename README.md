@@ -1,4 +1,4 @@
-# Terraform Modular AWS Network & EC2 Deployment (India Offices)  
+# Terraform Modular AWS Network & EC2 Deployment 
   
 ## Overview  
   
@@ -9,7 +9,7 @@ This repository contains a modular, production-grade Terraform setup for deployi
     - Creates a VPC in `ap-south-1` (Mumbai)  
     - 3 public subnets (1 per AZ)  
     - Internet Gateway and Route Table 
-    - Security Group allowing only whitelisted India office, VDI, and Cloudflare IPs
+    - Security Group allowing only whitelisted India office and Cloudflare IPs by default
     - DNS support & DNS hostnames enabled by default
     - Standardized tagging throughout
   
@@ -17,7 +17,7 @@ This repository contains a modular, production-grade Terraform setup for deployi
     - One or more EC2 instances launched in the VPC   
     - Uses the network stack’s Security Group & public subnet  
     - References network outputs via Terraform remote state
-    - Attaches a cron job for automatic daily shutdown (/sbin/shutdown -h now by default at 13:00UTC). This time is easily configurable via a Terraform variable (shutdown_cron_time)
+    - Attaches a cron job for automatic daily shutdown (`/sbin/shutdown -h now` by default at `13:00UTC`). This time is easily configurable via a Terraform variable (`shutdown_cron_time`)
   
 All Terraform resource blocks use the format `<user_prefix>.<resource_type>` for easy identification and search in code and in AWS.  
   
@@ -57,9 +57,9 @@ All resources accept the following variables for tags:
 |-------------------|------------------------------------------------------|-------------------------|  
 | `tag_name`        | Identifies the infrastructure resource group         | `sparsh-vpc`       |  
 | `tag_owner`       | Who owns/created the resource (first.last)           | `myname.surname`        |  
-| `tag_keep_until`  | When resource can be auto-cleaned (for governance)   | `2024-09-01`            |  
+| `tag_keep_until`  | When resource can be auto-cleaned (for governance)   | `2025-09-01`            |  
   
-*Values are set in `terraform.tfvars` in each module, and applied via local.tags.*  
+Values are set in `terraform.tfvars` in each module, and applied via `local.tags`.
   
 ---  
   
@@ -85,12 +85,12 @@ terraform apply
 ```
 
 This will read outputs from the network stack (remote state) and launch an EC2 in the public subnet with your security group.
-Edit `terraform.tfvars` here to set EC2 tag_name, owner, keep_until, AMI, or instance type.
+Edit `terraform.tfvars` here to set EC2 `tag_name`, `owner`, `keep_until`, `AMI`, or instance type.
+
 To clean up all EC2s but keep your network, simply:
 `terraform destroy`
 
-3. Destroying all infrastructure
-Always destroy the EC2 stack first, then the network stack:
+3. When destroying all infrastructure, always destroy the EC2 stack first, then the network stack:
 
 ```sh
 cd ../ec2_instance  
@@ -108,10 +108,10 @@ Command: `/sbin/shutdown -h now`
 
 Change the shutdown time:
     Edit the shutdown_cron_time in terraform/ec2_instance/terraform.tfvars, for example:
-    shutdown_cron_time = "0 21 * * *" # 21:00 UTC = 9 PM UTC daily   
+    shutdown_cron_time = `"0 21 * * *"` # 21:00 UTC = 9 PM UTC daily   
     Format: crontab syntax 
     The system time zone is UTC by default on Amazon Linux/Ubuntu cloud VMs.
-    If you want to remove or customize the behavior, edit the user_data section in ec2_instance/main.tf.
+    If you want to remove or customize the behavior, edit the user_data section in `ec2_instance/main.tf`.
 
 
 --------
@@ -119,7 +119,7 @@ Change the shutdown time:
 # Frequently Asked Questions
 
 Q: How do I update tags or allowed CIDRs?
-Edit the relevant variable or values in the appropriate terraform.tfvars or variables.tf, then rerun terraform apply.
+Edit the relevant variable or values in the appropriate terraform.tfvars or `variables.tf`, then rerun terraform apply.
 
 Q: How do I launch more than one EC2?
 Use the count variable for scaling.
