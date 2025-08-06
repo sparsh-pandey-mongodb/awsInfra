@@ -116,7 +116,7 @@ Change the shutdown time:
 
 --------
 
-# Frequently Asked Questions
+## Frequently Asked Questions
 
 Q: How do I update tags or allowed CIDRs?
 Edit the relevant variable or values in the appropriate terraform.tfvars or `variables.tf`, then rerun terraform apply.
@@ -138,11 +138,11 @@ CloudFlare
 
 If you need additional CIDRs, add them to the allowed_ips default in `network/variables.tf`.
 
-# Customization/Extension
+## Customization/Extension
 - Change subnets or regions: Edit azs and `public_subnet_cidrs` in `network/variables.tf`
 - Change EC2 AMI or type: Edit variables in `ec2_instance/variables.tf` or set in your `terraform.tfvars`
 
-# Troubleshooting
+## Troubleshooting
 - If tags or resources appear missing: Double-check your values in terraform.tfvars
 - State errors: Ensure you apply network before EC2, and never destroy the network stack first.
 - Credential errors: Credentials must be set in environment or AWS profile before running Terraform.
