@@ -147,6 +147,3 @@ If you need additional CIDRs, add them to the allowed_ips default in `network/va
 - State errors: Ensure you apply network before EC2, and never destroy the network stack first.
 - Credential errors: Credentials must be set in environment or AWS profile before running Terraform.
 
-
-### Created & Managed by "MongoDB Technical Services Team - Infrastructure"
-
